@@ -7,4 +7,5 @@
   :main ^:skip-aot my-stuff.core
   :target-path "target/%s"
   :plugins [[lein-gorilla "0.4.0"]]
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all} :dev {:dependencies [[alembic "0.3.2"]]}})
+  
