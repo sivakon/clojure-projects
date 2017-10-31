@@ -24,5 +24,5 @@
 - Once the worksheet is hosted at github. We can use [this link](http://viewer.gorilla-repl.org/view.html?source=github&user=sivakon&repo=clojure-projects&path=my-stuff/graph-examples.clj) to get the complete worksheet online
 
 
-
+Clojure tutorial here.
 [Link here](https://kimh.github.io/clojure-by-example/#scope)
