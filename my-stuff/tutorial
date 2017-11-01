@@ -1,0 +1,401 @@
+;; gorilla-repl.fileformat = 1
+
+;; **
+;;; # Gorilla REPL
+;;; 
+;;; Welcome to gorilla :-)
+;;; 
+;;; Shift + enter evaluates code. Hit alt+g twice in quick succession or click the menu icon (upper-right corner) for more commands ...
+;;; 
+;;; It's a good habit to run each worksheet in its own namespace: feel free to use the declaration we've provided below if you'd like.
+;; **
+
+;; @@
+(ns charming-waterfall
+  (:require [gorilla-plot.core :as plot]))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
+;;; Sometimes it’s useful to suspend evaluation, in particular for symbols and lists. Sometimes a symbol should just be a symbol without looking up what it refers to.
+;;; 
+;;; 
+;;; 
+;;; And sometimes a list should just be a list of data values (not code to evaluate):
+;;; 
+;; **
+
+;; @@
+'x
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-symbol'>x</span>","value":"x"}
+;; <=
+
+;; @@
+'(1 2 3)
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-long'>1</span>","value":"1"},{"type":"html","content":"<span class='clj-long'>2</span>","value":"2"},{"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}],"value":"(1 2 3)"}
+;; <=
+
+;; @@
+(+ 1 2)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
+;; <=
+
+;; @@
+(require '[clojure.repl :refer :all])
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(doc +)
+;; @@
+;; ->
+;;; -------------------------
+;;; clojure.core/+
+;;; ([] [x] [x y] [x y &amp; more])
+;;;   Returns the sum of nums. (+) returns 0. Does not auto-promote
+;;;   longs, will throw on overflow. See also: +&#x27;
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(doc doc)
+;; @@
+;; ->
+;;; -------------------------
+;;; clojure.repl/doc
+;;; ([name])
+;;; Macro
+;;;   Prints documentation for a var or special form given its name
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(doc println)
+;; @@
+;; ->
+;;; -------------------------
+;;; clojure.core/println
+;;; ([&amp; more])
+;;;   Same as print followed by (newline)
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(apropos "+")
+;; @@
+;; =>
+;;; {"type":"list-like","open":"<span class='clj-list'>(</span>","close":"<span class='clj-list'>)</span>","separator":" ","items":[{"type":"html","content":"<span class='clj-symbol'>cider.nrepl.middleware.util.cljs/piggieback-0-2+?</span>","value":"cider.nrepl.middleware.util.cljs/piggieback-0-2+?"},{"type":"html","content":"<span class='clj-symbol'>clojure.core/+</span>","value":"clojure.core/+"},{"type":"html","content":"<span class='clj-symbol'>clojure.core/+&#x27;</span>","value":"clojure.core/+'"},{"type":"html","content":"<span class='clj-symbol'>mranderson046.cljfmt.v0v3v0.rewrite-clj.v0v4v12.rewrite-clj.potemkin/defprotocol+</span>","value":"mranderson046.cljfmt.v0v3v0.rewrite-clj.v0v4v12.rewrite-clj.potemkin/defprotocol+"}],"value":"(cider.nrepl.middleware.util.cljs/piggieback-0-2+? clojure.core/+ clojure.core/+' mranderson046.cljfmt.v0v3v0.rewrite-clj.v0v4v12.rewrite-clj.potemkin/defprotocol+)"}
+;; <=
+
+;; **
+;;; The above command is used to get the library from which /+ this is taken.
+;; **
+
+;; @@
+(find-doc "trim")
+;; @@
+;; ->
+;;; -------------------------
+;;; clojure.string/trim
+;;; ([s])
+;;;   Removes whitespace from both ends of string.
+;;; -------------------------
+;;; clojure.string/trim-newline
+;;; ([s])
+;;;   Removes all trailing newline \n or return \r characters from
+;;;   string.  Similar to Perl&#x27;s chomp.
+;;; -------------------------
+;;; clojure.string/triml
+;;; ([s])
+;;;   Removes whitespace from the left side of string.
+;;; -------------------------
+;;; clojure.string/trimr
+;;; ([s])
+;;;   Removes whitespace from the right side of string.
+;;; -------------------------
+;;; clojure.core/subvec
+;;; ([v start] [v start end])
+;;;   Returns a persistent vector of the items in vector from
+;;;   start (inclusive) to end (exclusive).  If end is not supplied,
+;;;   defaults to (count vector). This operation is O(1) and very fast, as
+;;;   the resulting vector shares structure with the original and no
+;;;   trimming is done.
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(clojure.string/trim "asdasd")
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-string'>&quot;asdasd&quot;</span>","value":"\"asdasd\""}
+;; <=
+
+;; **
+;;; `dir` is used to get the total number of functions available from the workspace.
+;; **
+
+;; @@
+(dir clojure.repl)
+;; @@
+;; ->
+;;; apropos
+;;; demunge
+;;; dir
+;;; dir-fn
+;;; doc
+;;; find-doc
+;;; pst
+;;; root-cause
+;;; set-break-handler!
+;;; source
+;;; source-fn
+;;; stack-element-str
+;;; thread-stopper
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(source dir)
+;; @@
+;; ->
+;;; (defmacro dir
+;;;   &quot;Prints a sorted directory of public vars in a namespace&quot;
+;;;   [nsname]
+;;;   `(doseq [v# (dir-fn &#x27;~nsname)]
+;;;      (println v#)))
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
+;;; The literal representation of `x` is `#'charming-waterfall/x` 
+;; **
+
+;; @@
+(def x 7)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;charming-waterfall/x</span>","value":"#'charming-waterfall/x"}
+;; <=
+
+;; @@
+(* (+ x x) (* x))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>98</span>","value":"98"}
+;; <=
+
+;; @@
+(println "What is this? " (+ 1 2))
+;; @@
+;; ->
+;;; What is this?  3
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
+;;; ## Functions
+;; **
+
+;; @@
+(defn greet [name] (str "Hello, " name))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;charming-waterfall/greet</span>","value":"#'charming-waterfall/greet"}
+;; <=
+
+;; @@
+(greet "Siv")
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-string'>&quot;Hello, Siv&quot;</span>","value":"\"Hello, Siv\""}
+;; <=
+
+;; **
+;;; ### Multi-arity functions
+;; **
+
+;; @@
+(defn messenger
+  ([] (messenger "Hello World!"))
+  ([msg] (println "Hello" msg)))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;charming-waterfall/messenger</span>","value":"#'charming-waterfall/messenger"}
+;; <=
+
+;; @@
+(messenger)
+;; @@
+;; ->
+;;; Hello Hello World!
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+(messenger "Siva")
+;; @@
+;; ->
+;;; Hello Siva
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
+;;; ### Variadic functions
+;; **
+
+;; @@
+(defn hello [greeting & who]
+  (println greeting who))
+;; the function hello takes an argument (0 or more) that will be collected in a list named `who`
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;charming-waterfall/hello</span>","value":"#'charming-waterfall/hello"}
+;; <=
+
+;; @@
+(hello "Hello" "Siva" "KONANKI")
+;; @@
+;; ->
+;;; Hello (Siva KONANKI)
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; **
+;;; ### Anonymous functions
+;; **
+
+;; @@
+(fn [message] (println message)) ;;they die outside
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>#function[charming-waterfall/eval10085$fn--10086]</span>","value":"#function[charming-waterfall/eval10085$fn--10086]"}
+;; <=
+
+;; @@
+((fn [m] (println m)) "Hello") ;;invoking immediately because they die outside
+;; @@
+;; ->
+;;; Hello
+;;; 
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+;; defn vs fn
+(defn greet [name] (str "Hello" name))
+(def greet (fn [name] (str "Hello" name)))
+
+;; the above code is equivalent
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;charming-waterfall/greet</span>","value":"#'charming-waterfall/greet"}
+;; <=
+
+;; @@
+;; Equivalent to: (fn [x] (+ 6 x))
+#(+ 6 %)
+
+;; Equivalent to: (fn [x y] (+ x y))
+#(+ %1 %2)
+
+;; Equivalent to: (fn [x y & zs] (println x y zs))
+#(println %1 %2 %&)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-unkown'>#function[charming-waterfall/eval10136$fn--10137]</span>","value":"#function[charming-waterfall/eval10136$fn--10137]"}
+;; <=
+
+;; @@
+(#(+ 6 %) 2)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>8</span>","value":"8"}
+;; <=
+
+;; **
+;;; ### Applying the functions
+;; **
+
+;; @@
+(defn f [x y a b] (+ x y a b))
+
+(apply f '(1 2 3 4))    ;; same as  (f 1 2 3 4)
+(apply f 1 '(2 3 4))    ;; same as  (f 1 2 3 4)
+(apply f 1 2 '(3 4))    ;; same as  (f 1 2 3 4)
+(apply f 1 2 3 '(4))    ;; same as  (f 1 2 3 4)
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>10</span>","value":"10"}
+;; <=
+
+;; **
+;;; `apply` is useful when arguments are handed to you as a sequence but you must invoke the function with the values in the sequence.
+;; **
+
+;; @@
+;; examples
+(defn plot [shape coords]   ;; coords is [x y]
+  (plotxy shape (first coords) (second coords)))
+;; instead
+(defn plot [shape coords]
+  (apply plotxy shape coords))
+;; @@
+
+;; **
+;;; ### Using `let`
+;; **
+
+;; @@
+(let [x 1
+      y 2]
+  (+ x y))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>3</span>","value":"3"}
+;; <=
+
+;; @@
+
+;; @@
